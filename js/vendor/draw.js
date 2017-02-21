@@ -84,19 +84,25 @@
                 }
                 // addNewEntry($trafficStatusList, JSON.stringify(dataEntry));
 
-                console.log("linkdict: ",linkdict);
             });
             for(var key in linkdict){
-              linkarray.push(linkdict[key]);
+              var object = {
+                  "source":linkdict[key].srcObj,
+                  "target":linkdict[key].destObj,
+                  "value":linkdict[key].traffic
+              }
+              linkarray.push(object);
             }
             for(var key in nodedict){
-              nodearray.push(nodedict[key]);
+              var object = {"id":key}
+              nodearray.push(object);
             }
             var graph = {};
             graph.nodes = nodearray;
             graph.links = linkarray;
+            console.log("graph ",graph);
+
             draw(graph);
-            console.log("linkarray ",graph);
         },
         "stateFetchingFailure": function(event, data) {
             addNewEntry($trafficStatusList, JSON.stringify(data.error));
