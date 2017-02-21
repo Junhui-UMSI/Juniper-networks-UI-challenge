@@ -122,7 +122,7 @@ function draw(data){
       width = +svg.attr("width"),
       height = +svg.attr("height");
 
-  // var color = d3.scaleOrdinal(d3.schemeCategory20);
+  var color = d3.scaleOrdinal(d3.schemeCategory20);
 
   var simulation = d3.forceSimulation()
       .force("link", d3.forceLink().id(function(d) { return d.id; }))
@@ -134,7 +134,7 @@ function draw(data){
       .selectAll("line")
       .data(data.links)
       .enter().append("line")
-        .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
+        .attr("stroke-width", function(d) { return Math.sqrt(d.value)/40; });
 
     var node = svg.append("g")
         .attr("class", "nodes")
@@ -142,6 +142,7 @@ function draw(data){
       .data(data.nodes)
       .enter().append("circle")
         .attr("r", 5)
+        .attr("fill", function(d) { return color(d.group); })
         .call(d3.drag()
             .on("start", dragstarted)
             .on("drag", dragged)
@@ -185,4 +186,20 @@ function draw(data){
     d.fx = null;
     d.fy = null;
   }
+  
+  svg.selectAll(".nodes circle").on("mouseover",function(){
+     var this = d3.select(this);
+     this.classed("hovered",true);
+     addTooltip(this);
+  })
+  .on("mouseout",function(){
+      var this = d3.select(this);
+      this.classed("hovered",false);
+      d3.select("#tooltip").remove();
+  })
+
+
+
+
+
 };
