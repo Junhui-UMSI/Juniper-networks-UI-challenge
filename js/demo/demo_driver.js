@@ -58,9 +58,11 @@
 
     $(df2).on({
         "stateFetchingSuccess": function(event, data) {
-            data.result.data.forEach(function(dataEntry) {
-                addNewEntry($trafficStatusList, JSON.stringify(dataEntry));
-            });
+            // var graph = draw(data);
+            // addEntry(graph);
+            // data.result.data.forEach(function(dataEntry) {
+                // addNewEntry($trafficStatusList, JSON.stringify(dataEntry));
+            // });
         },
         "stateFetchingFailure": function(event, data) {
             addNewEntry($trafficStatusList, JSON.stringify(data.error));
